@@ -6,13 +6,16 @@
 composer install
 ```
 
-#### - Set tables using the migration command
+#### - Create .env file
+Copy .enc.example file to root folder and rename to .env and set environment variables.
+
+#### - Run migration command
 ```
 php bin/console doctrine:migrations:migrate
 ```
 
-#### - Install npm packages
+#### - Starting the Server
 ```
-npm install
+php bin/console server:start
 ```
 
