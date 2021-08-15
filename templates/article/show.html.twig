@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block header %}
+    {{ include('partials/header.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ article.title }}</td>
+            </tr>
+            <tr>
+                <th>Short_description</th>
+                <td>{{ article.shortDescription }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ article.body }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                {% if article.image %}
+                    <td><img src="{{ asset('images/articles/' ~ article.image) }}" class="img-thumbnail w-25" alt="Article"></td>
+                {% else  %}
+                    <td>-</td>
+                {% endif  %}
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col-md-auto"><a href="{{ path('article_index') }}" class="btn btn-info">back to list</a></div>
+        <div class="col-md-auto"><a href="{{ path('article_edit', {'id': article.id}) }}" class="btn btn-warning">edit</a></div>
+        <div class="col-md-auto">{{ include('article/_delete_form.html.twig') }}</div>
+    </div>
+{% endblock %}

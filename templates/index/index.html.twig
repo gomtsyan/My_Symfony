@@ -1,0 +1,44 @@
+{% extends 'home.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block header %}
+    {{ include('partials/home-header.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                {% for article in pagination %}
+                    <div class="post-preview">
+                        <a href="{{ path('post_show', {'id': article.id}) }}">
+                            <h2 class="post-title">{{ article.title }}</h2>
+                            <h3 class="post-subtitle">{{ article.shortDescription }}</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="javascript:">{{ article.user.name }}</a>
+                            on {{ article.createdAt|date("M d, Y") }}
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                {% else %}
+                    <div class="post-preview">
+                        <p class="post-meta">no records found</p>
+                    </div>
+                {% endfor %}
+
+                <!-- Pager-->
+                <div class="d-flex justify-content-center mb-4">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

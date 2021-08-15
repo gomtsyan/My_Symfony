@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Article{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .row {
+            justify-content: center;
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {{ include('partials/header.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-8 align-center">
+            <h1>Create new Article</h1>
+
+            {{ include('article/_form.html.twig') }}
+
+            <a href="{{ path('article_index') }}" class="btn btn-primary mt-2">back to list</a>
+        </div>
+    </div>
+{% endblock %}
