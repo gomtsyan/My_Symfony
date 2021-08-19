@@ -40,7 +40,6 @@ class ArticleController extends AbstractController
     }
 
     /**
-     *
      * @Route("/new", name="article_new", methods={"GET","POST"})
      * @Security("user")
      * @param Request $request
@@ -51,13 +50,13 @@ class ArticleController extends AbstractController
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
+        $imageFile = $form->get('imageFile')->getData();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $articleData = $form->getData();
             $articleData->setUser($this->getUser());
-            $articleImageFile = $form->get('imageFile')->getData();
-            if ($articleImageFile) {
-                $imageUploadResult = $fileUploader->upload($articleImageFile);
+            if ($imageFile) {
+                $imageUploadResult = $fileUploader->upload($imageFile);
                 if (is_array($imageUploadResult)) {
                     $this->addFlash('error', 'Image cannot be saved.');
                 }
@@ -69,6 +68,7 @@ class ArticleController extends AbstractController
             $entityManager->persist($articleData);
             $entityManager->flush();
             $this->addFlash('success', 'Article was created!');
+
             return $this->redirectToRoute('article_index', [], Response::HTTP_SEE_OTHER);
         }
 

@@ -16,13 +16,18 @@ class ErrorController extends AbstractController
      */
     public function show(Throwable $exception, DebugLoggerInterface $logger)
     {
-        $code = $exception->getStatusCode();
-        $message = $exception->getMessage();
+        if (method_exists($exception,'getStatusCode')) {
+            $code = $exception->getStatusCode();
+            $message = $exception->getMessage();
 
-        if ($exception instanceof NotFoundHttpException) {
-            $message = 'The page you are looking for was not found';
-        } else if ($exception instanceof AccessDeniedHttpException) {
-            $message = 'Forbidden';
+            if ($exception instanceof NotFoundHttpException) {
+                $message = 'The page you are looking for was not found';
+            } else if ($exception instanceof AccessDeniedHttpException) {
+                $message = 'Forbidden';
+            }
+        } else {
+            $code = 500;
+            $message = 'Internal server error';
         }
 
         return $this->render('error/index.html.twig', [

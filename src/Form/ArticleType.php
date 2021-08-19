@@ -36,7 +36,7 @@ class ArticleType extends AbstractType
                     'max' => 40,
                 ]),
                 new NotBlank([
-                    'message' => 'Title cannot be null',
+                    'message' => 'Title cannot be blank',
                 ])
             ],
         ]);
